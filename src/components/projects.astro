@@ -1,0 +1,130 @@
+---
+import Card from "@/components/ui/card.astro"
+import CardContent from "@/components/ui/card-content.astro"
+import CardHeader from "@/components/ui/card-header.astro"
+import CardTitle from "@/components/ui/card-title.astro"
+import CardDescription from "@/components/ui/card-description.astro"
+import Badge from "@/components/ui/badge.astro"
+import Button from "@/components/ui/button.astro"
+import { Github, ExternalLink } from "lucide-astro"
+
+interface Project {
+  title: string
+  description: string
+  image: string
+  technologies: string[]
+  github?: string
+  live?: string
+  featured?: boolean
+}
+
+const projects: Project[] = [
+  {
+    title: "Water Assessment Tool",
+    description: "A comprehensive web application for water quality assessment and management, built with Laravel Livewire for real-time interactions.",
+    image: "/api/placeholder/400/300",
+    technologies: ["Laravel", "Livewire", "MySQL", "Bootstrap", "JavaScript"],
+    featured: true
+  },
+  {
+    title: "Sign Language Prediction App",
+    description: "Machine learning application that predicts sign language gestures using CNN algorithms, developed during Bangkit Academy program.",
+    image: "/api/placeholder/400/300",
+    technologies: ["TensorFlow", "Python", "CNN", "Computer Vision", "Mobile App"],
+    featured: true
+  },
+  {
+    title: "SPI Restful API",
+    description: "Backend API system for Sekolah Programming Indonesia using Laravel framework with comprehensive authentication and authorization.",
+    image: "/api/placeholder/400/300",
+    technologies: ["Laravel", "API", "Spatie", "MySQL", "JWT"],
+    github: "#"
+  },
+  {
+    title: "University Registration System",
+    description: "Web application for Zoom and Office 365 registration and activation system for university staff and students.",
+    image: "/api/placeholder/400/300",
+    technologies: ["Laravel", "MySQL", "Bootstrap", "JavaScript"],
+  },
+  {
+    title: "Online Tryout System API",
+    description: "RESTful API for online examination and tryout system built with Laravel Lumen microframework for optimal performance.",
+    image: "/api/placeholder/400/300",
+    technologies: ["Lumen", "Laravel", "API", "MySQL", "Authentication"],
+    github: "#"
+  },
+  {
+    title: "Community Service Web App",
+    description: "Comprehensive web application for managing community service programs with admin panel and user management system.",
+    image: "/api/placeholder/400/300",
+    technologies: ["Laravel", "MySQL", "Bootstrap", "JavaScript", "Admin Panel"],
+  }
+]
+---
+
+<section id="projects" class="py-20">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto mb-16 text-center fade-in">
+      <h2 class="text-3xl font-bold mb-4">Featured Projects</h2>
+      <div class="h-1 w-20 bg-primary mx-auto mb-8"></div>
+      <p class="text-lg text-muted-foreground">A showcase of my recent work and contributions</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      {projects.map((project, index) => (
+        <div class="slide-up" style={`animation-delay: ${index * 0.1}s;`}>
+          <Card class={`h-full bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${project.featured ? 'ring-2 ring-primary/20' : ''}`}>
+            <CardHeader class="p-0">
+              <div class="relative overflow-hidden rounded-t-lg">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                />
+                {project.featured && (
+                  <Badge class="absolute top-2 left-2 bg-primary text-primary-foreground">
+                    Featured
+                  </Badge>
+                )}
+              </div>
+            </CardHeader>
+            
+            <CardContent class="p-6">
+              <CardTitle class="mb-2 text-foreground">{project.title}</CardTitle>
+              <CardDescription class="mb-4 text-sm leading-relaxed">
+                {project.description}
+              </CardDescription>
+              
+              <div class="flex flex-wrap gap-2 mb-4">
+                {project.technologies.map((tech) => (
+                  <Badge variant="outline" class="text-xs">
+                    {tech}
+                  </Badge>
+                ))}
+              </div>
+              
+              <div class="flex items-center gap-3 mt-auto">
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" size="sm" class="gap-2">
+                      <Github class="h-4 w-4" />
+                      Code
+                    </Button>
+                  </a>
+                )}
+                {project.live && (
+                  <a href={project.live} target="_blank" rel="noopener noreferrer">
+                    <Button size="sm" class="gap-2">
+                      <ExternalLink class="h-4 w-4" />
+                      Live Demo
+                    </Button>
+                  </a>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

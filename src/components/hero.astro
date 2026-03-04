@@ -1,0 +1,61 @@
+---
+import Button from "@/components/ui/button.astro"
+import { ArrowDown, Github, Linkedin, Mail } from "lucide-astro"
+---
+
+<section id="home" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="slide-up">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Hi, I'm <span class="text-primary">Paulus Lestyo Adhiatma</span>
+        </h1>
+      </div>
+
+      <div class="slide-up" style="animation-delay: 0.2s;">
+        <h2 class="text-2xl md:text-3xl font-medium mb-8 text-muted-foreground">
+          Programmer & Backend Developer
+        </h2>
+      </div>
+
+      <div 
+        class="flex flex-wrap justify-center gap-4 mb-12 slide-up" 
+        style="animation-delay: 0.4s;"
+      >
+        <a href="https://github.com/paul-lestyo/" target="_blank" rel="noopener noreferrer">
+          <Button variant="outline" size="lg" class="gap-2">
+            <Github class="h-5 w-5" />
+            GitHub
+          </Button>
+        </a>
+        <a href="https://www.linkedin.com/in/paulus-lestyo/" target="_blank" rel="noopener noreferrer">
+          <Button variant="outline" size="lg" class="gap-2">
+            <Linkedin class="h-5 w-5" />
+            LinkedIn
+          </Button>
+        </a>
+        <a href="mailto:lestyo24@gmail.com">
+          <Button variant="outline" size="lg" class="gap-2">
+            <Mail class="h-5 w-5" />
+            Email
+          </Button>
+        </a>
+      </div>
+
+      <div class="slide-up" style="animation-delay: 0.6s;">
+        <a href="#about">
+          <Button variant="default" size="lg" class="gap-2">
+            Explore My Work
+            <ArrowDown class="h-4 w-4" />
+          </Button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background elements -->
+  <div class="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+---
+import { Sun, Moon } from "lucide-astro"
+import Button from "@/components/ui/button.astro"
+
+export interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<Button 
+  variant="ghost" 
+  size="icon" 
+  class=`focus-visible:ring-0 ${className}`
+  id="theme-toggle"
+  aria-label="Toggle theme"
+>
+  <Sun class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+  <Moon class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+  <span class="sr-only">Toggle theme</span>
+</Button>
+
+<script>
+  function toggleTheme() {
+    const theme = localStorage.getItem('theme') ?? 'system'
+    const nextTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light'
+    
+    localStorage.setItem('theme', nextTheme)
+    applyTheme(nextTheme)
+  }
+
+  function applyTheme(theme: string) {
+    const root = document.documentElement
+    
+    if (theme === 'system') {
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      root.classList.toggle('dark', systemPrefersDark)
+    } else {
+      root.classList.toggle('dark', theme === 'dark')
+    }
+  }
+
+  // Initialize theme on load
+  const savedTheme = localStorage.getItem('theme') ?? 'system'
+  applyTheme(savedTheme)
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (localStorage.getItem('theme') === 'system') {
+      applyTheme('system')
+    }
+  })
+
+  // Attach click handler
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme)
+</script>

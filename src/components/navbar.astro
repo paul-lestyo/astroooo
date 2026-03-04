@@ -1,0 +1,149 @@
+---
+import { Menu, X } from "lucide-astro"
+import Button from "@/components/ui/button.astro"
+import ModeToggle from "./mode-toggle.astro"
+
+const navItems = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Experience", href: "#experience" },
+  { name: "Education", href: "#education" },
+  { name: "Projects", href: "#projects" },
+  { name: "Contact", href: "#contact" },
+]
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent"
+>
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="#home" class="text-xl font-bold fade-in">
+      Paulus<span class="text-primary">.</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center space-x-6">
+      <div class="flex space-x-6">
+        {navItems.map((item) => (
+          <a 
+            href={item.href} 
+            class="text-sm font-medium hover:text-primary transition-colors fade-in"
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
+      <ModeToggle />
+    </nav>
+
+    <!-- Mobile Navigation Toggle -->
+    <div class="flex items-center md:hidden space-x-4">
+      <ModeToggle />
+      <Button variant="ghost" size="icon" id="mobile-menu-toggle">
+        <Menu class="h-6 w-6 menu-icon" />
+        <X class="h-6 w-6 close-icon hidden" />
+      </Button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  <div id="mobile-menu" class="md:hidden bg-background/95 backdrop-blur-md hidden">
+    <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="text-sm font-medium py-2 hover:text-primary transition-colors mobile-nav-link"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  function initializeNavbar() {
+    const navbar = document.getElementById('navbar')
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle')
+    const mobileMenu = document.getElementById('mobile-menu')
+    const menuIcon = document.querySelector('.menu-icon')
+    const closeIcon = document.querySelector('.close-icon')
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link')
+
+    let isOpen = false
+
+    // Handle scroll effect
+    function handleScroll() {
+      if (navbar) {
+        const scrolled = window.scrollY > 10
+        if (scrolled) {
+          navbar.classList.add('bg-background/80', 'backdrop-blur-md', 'shadow-sm')
+          navbar.classList.remove('bg-transparent')
+        } else {
+          navbar.classList.remove('bg-background/80', 'backdrop-blur-md', 'shadow-sm')
+          navbar.classList.add('bg-transparent')
+        }
+      }
+    }
+
+    // Handle mobile menu toggle
+    function toggleMobileMenu() {
+      isOpen = !isOpen
+      
+      if (mobileMenu && menuIcon && closeIcon) {
+        if (isOpen) {
+          mobileMenu.classList.remove('hidden')
+          menuIcon.classList.add('hidden')
+          closeIcon.classList.remove('hidden')
+        } else {
+          mobileMenu.classList.add('hidden')
+          menuIcon.classList.remove('hidden')
+          closeIcon.classList.add('hidden')
+        }
+      }
+    }
+
+    // Close mobile menu when clicking on navigation links
+    function closeMobileMenu() {
+      isOpen = false
+      if (mobileMenu && menuIcon && closeIcon) {
+        mobileMenu.classList.add('hidden')
+        menuIcon.classList.remove('hidden')
+        closeIcon.classList.add('hidden')
+      }
+    }
+
+    // Event listeners
+    window.addEventListener('scroll', handleScroll)
+    mobileMenuToggle?.addEventListener('click', toggleMobileMenu)
+    
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu)
+    })
+
+    // Smooth scroll for anchor links
+    const allNavLinks = document.querySelectorAll('a[href^="#"]')
+    allNavLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault()
+        const targetId = link.getAttribute('href')?.substring(1)
+        const targetElement = document.getElementById(targetId || '')
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          })
+        }
+      })
+    })
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', initializeNavbar)
+
+  // Re-initialize for Astro's client-side navigation
+  document.addEventListener('astro:page-load', initializeNavbar)
+</script>

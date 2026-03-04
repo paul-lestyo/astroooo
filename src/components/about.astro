@@ -1,0 +1,58 @@
+---
+import Card from "@/components/ui/card.astro"
+import CardContent from "@/components/ui/card-content.astro"
+import { Phone, Mail, MapPin } from "lucide-astro"
+---
+
+<section id="about" class="py-20 bg-muted/30">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto mb-16 text-center fade-in">
+      <h2 class="text-3xl font-bold mb-4">About Me</h2>
+      <div class="h-1 w-20 bg-primary mx-auto mb-8"></div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div class="md:col-span-2 slide-up">
+        <p class="text-lg mb-6">
+          I am a professional with a strong background in informatics and instructional technology, currently
+          working as a programmer. With hands-on experience in both high-code and low-code platforms, as well as
+          backend development, I continuously strive to improve my technical and collaborative skills.
+        </p>
+        <p class="text-lg">
+          I bring a proactive learning attitude and a strong sense of teamwork to every project, ensuring both
+          individual growth and team success.
+        </p>
+      </div>
+
+      <div class="slide-up" style="animation-delay: 0.2s;">
+        <Card>
+          <CardContent class="pt-6">
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <Phone class="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <p class="font-medium">Phone</p>
+                  <p class="text-sm text-muted-foreground">+6281239466830</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <Mail class="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <p class="font-medium">Email</p>
+                  <p class="text-sm text-muted-foreground">lestyo24@gmail.com</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <MapPin class="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <p class="font-medium">Location</p>
+                  <p class="text-sm text-muted-foreground">Makam Bergolo RT04/RW08 Serengan, Surakarta</p>
+                </div>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+</section>

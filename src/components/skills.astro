@@ -1,0 +1,142 @@
+---
+import Card from "@/components/ui/card.astro"
+import CardContent from "@/components/ui/card-content.astro"
+
+interface Skill {
+  name: string
+  icon: string
+}
+
+interface SkillCategory {
+  name: string
+  skills: Skill[]
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    name: "Frontend",
+    skills: [
+      { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      {
+        name: "JavaScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+      },
+      {
+        name: "TypeScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      },
+    ],
+  },
+  {
+    name: "Backend",
+    skills: [
+      { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+      { name: "Laravel", icon: "https://raw.githubusercontent.com/devicons/devicon/refs/tags/v2.17.0/icons/laravel/laravel-original.svg" },
+      {
+        name: "CodeIgniter",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain.svg",
+      },
+      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+      { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+      { name: "Golang", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" },
+    ],
+  },
+  {
+    name: "Database",
+    skills: [
+      { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+      {
+        name: "PostgreSQL",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+      },
+      { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+      {
+        name: "SQL Server",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg",
+      },
+    ],
+  },
+  {
+    name: "Tools & Others",
+    skills: [
+      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+      { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+      { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+      { name: "Jira", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" },
+      {
+        name: "TensorFlow",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+      },
+    ],
+  },
+]
+
+const softSkills = ["Communication", "Teamwork", "Problem-Solving", "Adaptability", "Time Management"]
+---
+
+<section id="skills" class="py-20 relative overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/95 z-10"></div>
+    <img
+      src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=2125&auto=format&fit=crop"
+      alt="Technology background"
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <div class="container mx-auto px-4 relative z-20">
+    <div class="max-w-3xl mx-auto mb-16 text-center fade-in">
+      <h2 class="text-3xl font-bold mb-4 text-foreground">Technical Skills</h2>
+      <div class="h-1 w-20 bg-primary mx-auto mb-8"></div>
+      <p class="text-lg text-muted-foreground">Technologies and tools I work with</p>
+    </div>
+
+    <!-- Technical Skills -->
+    <div class="mb-16 space-y-12 max-w-6xl mx-auto">
+      {skillCategories.map((category, index) => (
+        <div class="mb-8 slide-up" style={`animation-delay: ${index * 0.1}s;`}>
+          <div class="flex items-center justify-center mb-6">
+            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-primary/50"></div>
+            <h3 class="text-lg font-semibold text-foreground mx-6">{category.name}</h3>
+            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-primary/50"></div>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-6">
+            {category.skills.map((skill) => (
+              <div class="flex flex-col items-center justify-center group">
+                <div class="relative w-16 h-16 bg-background/80 backdrop-blur-sm rounded-xl p-2 shadow-lg border flex items-center justify-center group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                  <img
+                    src={skill.icon}
+                    alt={skill.name}
+                    class="w-12 h-12 transition-transform duration-300"
+                  />
+                </div>
+                <span class="text-sm font-medium mt-3 text-foreground group-hover:text-primary transition-colors duration-300 text-center">
+                  {skill.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Soft Skills -->
+    <div class="max-w-3xl mx-auto slide-up" style="animation-delay: 0.3s;">
+      <h3 class="text-2xl font-bold mb-8 text-center text-foreground">Soft Skills</h3>
+      <Card class="bg-background/80 backdrop-blur-sm border-border/50">
+        <CardContent class="p-6">
+          <div class="flex flex-wrap justify-center gap-4">
+            {softSkills.map((skill) => (
+              <div class="bg-primary/10 px-4 py-2 rounded-full border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300">
+                <span class="text-primary font-medium">{skill}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</section>
