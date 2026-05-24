@@ -1,0 +1,11 @@
+name: "University Registration System"
+image: "https://picsum.photos/seed/university-registration-system/800/600"
+shortDescription: "Web application for Zoom and Office 365 registration and activation."
+text: >-
+  Used by university staff and students to simplify service registration and
+  activation workflows.
+techstack:
+  - "Laravel"
+  - "MySQL"
+  - "Bootstrap"
+  - "JavaScript"

@@ -1,0 +1,12 @@
+name: "Water Assessment Tool"
+image: "https://picsum.photos/seed/water-assessment-tool/800/600"
+shortDescription: "A comprehensive web application for water quality assessment and management."
+text: >-
+  Built with Laravel Livewire for real-time interactions and aligned with
+  business requirements from the ground up.
+techstack:
+  - "Laravel"
+  - "Livewire"
+  - "MySQL"
+  - "Bootstrap"
+  - "JavaScript"

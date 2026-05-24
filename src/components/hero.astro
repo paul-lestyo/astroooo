@@ -1,6 +1,16 @@
 ---
 import Button from "@/components/ui/button.astro"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-astro"
+
+interface Props {
+  contact: {
+    email: string
+    github: string | null
+    linkedin: string | null
+  }
+}
+
+const { contact } = Astro.props as Props
 ---
 
 <section id="home" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
@@ -22,19 +32,23 @@ import { ArrowDown, Github, Linkedin, Mail } from "lucide-astro"
         class="flex flex-wrap justify-center gap-4 mb-12 slide-up" 
         style="animation-delay: 0.4s;"
       >
-        <a href="https://github.com/paul-lestyo/" target="_blank" rel="noopener noreferrer">
-          <Button variant="outline" size="lg" class="gap-2">
-            <Github class="h-5 w-5" />
-            GitHub
-          </Button>
-        </a>
-        <a href="https://www.linkedin.com/in/paulus-lestyo/" target="_blank" rel="noopener noreferrer">
-          <Button variant="outline" size="lg" class="gap-2">
-            <Linkedin class="h-5 w-5" />
-            LinkedIn
-          </Button>
-        </a>
-        <a href="mailto:lestyo24@gmail.com">
+        {contact.github && (
+          <a href={contact.github} target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="lg" class="gap-2">
+              <Github class="h-5 w-5" />
+              GitHub
+            </Button>
+          </a>
+        )}
+        {contact.linkedin && (
+          <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="lg" class="gap-2">
+              <Linkedin class="h-5 w-5" />
+              LinkedIn
+            </Button>
+          </a>
+        )}
+        <a href={`mailto:${contact.email}`}>
           <Button variant="outline" size="lg" class="gap-2">
             <Mail class="h-5 w-5" />
             Email

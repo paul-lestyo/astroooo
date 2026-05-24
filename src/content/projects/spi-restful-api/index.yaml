@@ -1,0 +1,12 @@
+name: "SPI Restful API"
+image: "https://picsum.photos/seed/spi-restful-api/800/600"
+shortDescription: "Backend API system for Sekolah Programming Indonesia."
+text: >-
+  Built with Laravel framework and focused on authentication, authorization,
+  and maintainable API structure.
+techstack:
+  - "Laravel"
+  - "API"
+  - "Spatie"
+  - "MySQL"
+  - "JWT"

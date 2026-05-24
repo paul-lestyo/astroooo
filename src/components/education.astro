@@ -5,34 +5,28 @@ import Badge from "@/components/ui/badge.astro"
 import { GraduationCap, Calendar } from "lucide-astro"
 
 interface Education {
-  institution: string
+  campus: string
   degree: string
-  field: string
-  location: string
-  period: string
-  grade?: string
-  description?: string
+  startDate: string | null
+  endDate: string | null
+  descriptionBullets: readonly string[]
 }
 
-const educations: Education[] = [
-  {
-    institution: "Sebelas Maret University",
-    degree: "Bachelor's Degree",
-    field: "Informatics Engineering",
-    location: "Surakarta",
-    period: "2019 - 2023",
-    grade: "GPA: 3.64",
-    description: "Focused on software engineering, database systems, and web development. Completed various projects including machine learning applications and web-based systems."
-  },
-  {
-    institution: "SMA Negeri 3 Surakarta",
-    degree: "High School Diploma",
-    field: "Science",
-    location: "Surakarta",
-    period: "2016 - 2019",
-    description: "Specialized in Mathematics and Natural Sciences with focus on Physics, Chemistry, and Mathematics."
-  }
-]
+interface Props {
+  education: Array<{ slug: string; entry: Education }>
+}
+
+const { education } = Astro.props as Props
+
+function formatRange(item: Education) {
+  const start = item.startDate
+    ? new Date(item.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    : ''
+  const end = item.endDate
+    ? new Date(item.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    : 'Present'
+  return `${start} - ${end}`
+}
 ---
 
 <section id="education" class="py-20 bg-muted/30">
@@ -44,7 +38,7 @@ const educations: Education[] = [
     </div>
 
     <div class="max-w-4xl mx-auto space-y-6">
-      {educations.map((education, index) => (
+      {education.map((educationItem, index) => (
         <div class="slide-up" style={`animation-delay: ${index * 0.2}s;`}>
           <Card class="bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300">
             <CardContent class="p-6">
@@ -54,30 +48,26 @@ const educations: Education[] = [
                     <GraduationCap class="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 class="text-xl font-semibold text-foreground">{education.degree}</h3>
-                    <p class="text-lg font-medium text-primary">{education.field}</p>
-                    <p class="text-base text-foreground">{education.institution}</p>
-                    <p class="text-sm text-muted-foreground">{education.location}</p>
+                    <h3 class="text-xl font-semibold text-foreground">{educationItem.entry.degree}</h3>
+                    <p class="text-base text-foreground">{educationItem.entry.campus}</p>
                   </div>
                 </div>
                 <div class="flex flex-col items-start md:items-end space-y-2">
                   <div class="flex items-center text-sm text-muted-foreground">
                     <Calendar class="h-4 w-4 mr-1" />
-                    {education.period}
+                    {formatRange(educationItem.entry)}
                   </div>
-                  {education.grade && (
-                    <Badge variant="secondary" class="text-xs">
-                      {education.grade}
-                    </Badge>
-                  )}
                 </div>
               </div>
               
-              {education.description && (
-                <p class="text-sm text-muted-foreground leading-relaxed mt-4">
-                  {education.description}
-                </p>
-              )}
+              <div class="space-y-3">
+                {educationItem.entry.descriptionBullets.map((bullet) => (
+                  <div class="flex items-start gap-3">
+                    <div class="w-2 h-2 rounded-full bg-primary shrink-0 mt-2"></div>
+                    <p class="text-sm text-muted-foreground leading-relaxed">{bullet}</p>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>

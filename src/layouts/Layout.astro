@@ -1,7 +1,6 @@
 ---
 import "@/styles/globals.css"
 import Navbar from "@/components/navbar.astro"
-import Footer from "@/components/footer.astro"
 
 export interface Props {
   title?: string
@@ -60,7 +59,6 @@ const {
       <main class="flex-grow">
         <slot />
       </main>
-      <Footer />
     </div>
   </body>
 </html>

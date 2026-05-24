@@ -3,6 +3,18 @@ import Card from "@/components/ui/card.astro"
 import CardContent from "@/components/ui/card-content.astro"
 import Button from "@/components/ui/button.astro"
 import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-astro"
+
+interface Props {
+  contactInfo: {
+    email: string
+    phone: string
+    location: string
+    linkedin: string | null
+    github: string | null
+  }
+}
+
+const { contactInfo } = Astro.props as Props
 ---
 
 <section id="contact" class="py-20 bg-muted/30">
@@ -29,8 +41,8 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-astro"
                 </div>
                 <div>
                   <p class="font-medium text-foreground">Email</p>
-                  <a href="mailto:lestyo24@gmail.com" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    lestyo24@gmail.com
+                  <a href={`mailto:${contactInfo.email}`} class="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {contactInfo.email}
                   </a>
                 </div>
               </div>
@@ -41,8 +53,8 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-astro"
                 </div>
                 <div>
                   <p class="font-medium text-foreground">Phone</p>
-                  <a href="tel:+6281239466830" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    +62 812-3946-6830
+                  <a href={`tel:${contactInfo.phone.replace(/\s+/g, '')}`} class="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {contactInfo.phone}
                   </a>
                 </div>
               </div>
@@ -53,10 +65,7 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-astro"
                 </div>
                 <div>
                   <p class="font-medium text-foreground">Location</p>
-                  <p class="text-sm text-muted-foreground">
-                    Makam Bergolo RT04/RW08<br />
-                    Serengan, Surakarta
-                  </p>
+                  <p class="text-sm text-muted-foreground">{contactInfo.location}</p>
                 </div>
               </div>
             </div>
@@ -64,22 +73,26 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-astro"
             <div class="mt-8">
               <h4 class="font-medium mb-4 text-foreground">Connect with me</h4>
               <div class="flex gap-3">
-                <a
-                  href="https://github.com/paul-lestyo/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center hover:bg-primary/20 transition-colors"
-                >
-                  <Github class="h-5 w-5 text-primary" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/paulus-lestyo/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center hover:bg-primary/20 transition-colors"
-                >
-                  <Linkedin class="h-5 w-5 text-primary" />
-                </a>
+                {contactInfo.github && (
+                  <a
+                    href={contactInfo.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center hover:bg-primary/20 transition-colors"
+                  >
+                    <Github class="h-5 w-5 text-primary" />
+                  </a>
+                )}
+                {contactInfo.linkedin && (
+                  <a
+                    href={contactInfo.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center hover:bg-primary/20 transition-colors"
+                  >
+                    <Linkedin class="h-5 w-5 text-primary" />
+                  </a>
+                )}
               </div>
             </div>
           </CardContent>
@@ -154,48 +167,34 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-astro"
   </div>
 </section>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contact-form') as HTMLFormElement
-    
-    if (contactForm) {
-      contactForm.addEventListener('submit', function(e) {
-        e.preventDefault()
-        
-        // Get form data
-        const formData = new FormData(contactForm)
-        const name = formData.get('name') as string
-        const email = formData.get('email') as string
-        const subject = formData.get('subject') as string
-        const message = formData.get('message') as string
-        
-        // Create mailto link
-        const mailtoLink = `mailto:lestyo24@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`
-        
-        // Open email client
-        window.location.href = mailtoLink
-      })
-    }
-  })
+<script define:vars={{ contactInfo }}>
+  const initializeContactForm = () => {
+    const contactForm = document.getElementById('contact-form')
 
-  // Re-initialize for Astro's client-side navigation
-  document.addEventListener('astro:page-load', function() {
-    const contactForm = document.getElementById('contact-form') as HTMLFormElement
-    
-    if (contactForm) {
-      contactForm.addEventListener('submit', function(e) {
-        e.preventDefault()
-        
-        const formData = new FormData(contactForm)
-        const name = formData.get('name') as string
-        const email = formData.get('email') as string
-        const subject = formData.get('subject') as string
-        const message = formData.get('message') as string
-        
-        const mailtoLink = `mailto:lestyo24@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`
-        
-        window.location.href = mailtoLink
-      })
+    if (!(contactForm instanceof HTMLFormElement)) {
+      return
     }
-  })
+
+    if (contactForm.dataset.bound === 'true') {
+      return
+    }
+
+    contactForm.dataset.bound = 'true'
+    contactForm.addEventListener('submit', function(event) {
+      event.preventDefault()
+
+      const formData = new FormData(contactForm)
+      const name = String(formData.get('name') ?? '')
+      const email = String(formData.get('email') ?? '')
+      const subject = String(formData.get('subject') ?? '')
+      const message = String(formData.get('message') ?? '')
+
+      const mailtoLink = `mailto:${contactInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`
+
+      window.location.href = mailtoLink
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', initializeContactForm)
+  document.addEventListener('astro:page-load', initializeContactForm)
 </script>

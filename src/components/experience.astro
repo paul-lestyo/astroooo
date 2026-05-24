@@ -8,82 +8,30 @@ interface Experience {
   company: string
   location: string
   position: string
-  type: string
-  period: string
-  responsibilities: string[]
+  jobType: string
+  startDate: string | null
+  endDate: string | null
+  stillWorking: boolean
+  descriptionBullets: readonly string[]
 }
 
-const experiences: Experience[] = [
-  {
-    company: "Bank Central Asia",
-    location: "Bandung",
-    position: "Programmer",
-    type: "Contract",
-    period: "Sep 2024 - Present",
-    responsibilities: [
-      "Designed and structured databases based on requirements provided by Business Analysts using SQL Server.",
-      "Developed web applications using both high-code (C#) and low-code (OutSystems) platforms to meet project goals and timelines.",
-      "Collaborated effectively with cross-functional teams using tools such as Microsoft Teams, Jira, and GitLab to ensure smooth project execution and version control.",
-    ],
-  },
-  {
-    company: "PT. Solusi Teknologi Air Nusantara",
-    location: "",
-    position: "Backend Developer",
-    type: "Freelance",
-    period: "Nov 2023 - Apr 2024",
-    responsibilities: [
-      "Design comprehensive flowcharts and Entity-Relationship Diagrams (ERD) for the Water Assessment Tool, ensuring alignment with business requirements",
-      "Develop the Water Assessment Tool web application using Laravel Livewire",
-      "Conduct regular security audits and enhance the system based on penetration testing reports",
-    ],
-  },
-  {
-    company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka",
-    location: "Indonesia",
-    position: "Machine Learning Path",
-    type: "",
-    period: "Feb 2023 - Jul 2023",
-    responsibilities: [
-      "Studied related Machine Learning fields such as Computer Vision, NLP, and Time Series with Tensorflow",
-      "Create applications with the team related to sign language prediction applications with CNN algorithms",
-    ],
-  },
-  {
-    company: "PT. Ekasa Teknologi Nusantara",
-    location: "Surakarta",
-    position: "Backend Developer",
-    type: "Internship",
-    period: "Jan 2023 - Feb 2023",
-    responsibilities: [
-      "Collaborate with a team of 3 members using the scrum method",
-      "Create Restful API for the Sekolah Programming Indonesia (SPI) using the Laravel 9 framework and spatie library",
-    ],
-  },
-  {
-    company: "PTIK UNS",
-    location: "Surakarta",
-    position: "Web Programming Assistant Lecturer",
-    type: "",
-    period: "Jul 2022 - Dec 2022",
-    responsibilities: [
-      "Help the lecturer to teach the student about web programming",
-      "Give an assignment and evaluation to the student.",
-    ],
-  },
-  {
-    company: "UPT TIK UNS",
-    location: "",
-    position: "Web Developer",
-    type: "Internship",
-    period: "Jan 2022 - Dec 2022",
-    responsibilities: [
-      "Being responsible for and performing maintenance on the website that running on the server",
-      "Creating a website for the registration and activation of Zoom and Office 365 for staff and students using the Laravel framework as part of a team",
-      "Being an IT Helpdesk in the UNS new student admissions exam",
-    ],
-  },
-]
+interface Props {
+  workExperience: Array<{ slug: string; entry: Experience }>
+}
+
+const { workExperience } = Astro.props as Props
+
+function formatRange(experience: Experience) {
+  const start = experience.startDate
+    ? new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    : ''
+  const end = experience.stillWorking
+    ? 'Present'
+    : experience.endDate
+      ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+      : 'Present'
+  return `${start} - ${end}`
+}
 ---
 
 <section id="experience" class="py-20">
@@ -100,7 +48,7 @@ const experiences: Experience[] = [
         <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-border"></div>
         
         <div class="space-y-8">
-          {experiences.map((experience, index) => (
+          {workExperience.map((experience, index) => (
             <div class="relative slide-up" style={`animation-delay: ${index * 0.1}s;`}>
               <!-- Timeline Dot -->
               <div class="absolute left-3 w-6 h-6 bg-primary rounded-full border-4 border-background shadow-sm z-10"></div>
@@ -111,25 +59,25 @@ const experiences: Experience[] = [
                   <CardContent class="p-6">
                     <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                       <div class="mb-3 lg:mb-0">
-                        <h3 class="text-xl font-semibold text-foreground mb-1">{experience.position}</h3>
-                        <p class="text-lg font-medium text-primary mb-1">{experience.company}</p>
-                        {experience.location && <p class="text-sm text-muted-foreground">{experience.location}</p>}
+                        <h3 class="text-xl font-semibold text-foreground mb-1">{experience.entry.position}</h3>
+                        <p class="text-lg font-medium text-primary mb-1">{experience.entry.company}</p>
+                        {experience.entry.location && <p class="text-sm text-muted-foreground">{experience.entry.location}</p>}
                       </div>
                       <div class="flex flex-col items-start lg:items-end space-y-2">
                         <div class="flex items-center text-sm text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
                           <Calendar class="h-4 w-4 mr-2" />
-                          {experience.period}
+                          {formatRange(experience.entry)}
                         </div>
-                        {experience.type && (
+                        {experience.entry.jobType && (
                           <Badge variant="secondary" class="text-xs">
-                            {experience.type}
+                            {experience.entry.jobType}
                           </Badge>
                         )}
                       </div>
                     </div>
                     
                     <div class="space-y-3">
-                      {experience.responsibilities.map((responsibility) => (
+                      {experience.entry.descriptionBullets.map((responsibility) => (
                         <div class="flex items-start gap-3">
                           <div class="w-2 h-2 rounded-full bg-primary shrink-0 mt-2"></div>
                           <p class="text-sm text-muted-foreground leading-relaxed">{responsibility}</p>

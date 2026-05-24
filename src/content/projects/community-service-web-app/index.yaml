@@ -1,0 +1,12 @@
+name: "Community Service Web App"
+image: "https://picsum.photos/seed/community-service-web-app/800/600"
+shortDescription: "Web application for managing community service programs."
+text: >-
+  Includes an admin panel and user management system to support daily program
+  operations.
+techstack:
+  - "Laravel"
+  - "MySQL"
+  - "Bootstrap"
+  - "JavaScript"
+  - "Admin Panel"

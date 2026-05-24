@@ -2,77 +2,31 @@
 import Card from "@/components/ui/card.astro"
 import CardContent from "@/components/ui/card-content.astro"
 
-interface Skill {
+interface SkillItem {
   name: string
-  icon: string
+  image: string | null
 }
 
-interface SkillCategory {
-  name: string
-  skills: Skill[]
+interface Props {
+  technicalSkills: {
+    frontend: readonly SkillItem[]
+    backend: readonly SkillItem[]
+    database: readonly SkillItem[]
+    toolsAndOthers: readonly SkillItem[]
+  }
+  softSkills: {
+    items: readonly string[]
+  }
 }
 
-const skillCategories: SkillCategory[] = [
-  {
-    name: "Frontend",
-    skills: [
-      { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-      { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-      {
-        name: "JavaScript",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      },
-      {
-        name: "TypeScript",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-      },
-    ],
-  },
-  {
-    name: "Backend",
-    skills: [
-      { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
-      { name: "Laravel", icon: "https://raw.githubusercontent.com/devicons/devicon/refs/tags/v2.17.0/icons/laravel/laravel-original.svg" },
-      {
-        name: "CodeIgniter",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain.svg",
-      },
-      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-      { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
-      { name: "Golang", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg" },
-    ],
-  },
-  {
-    name: "Database",
-    skills: [
-      { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-      {
-        name: "PostgreSQL",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-      },
-      { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-      {
-        name: "SQL Server",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg",
-      },
-    ],
-  },
-  {
-    name: "Tools & Others",
-    skills: [
-      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-      { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-      { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
-      { name: "Jira", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" },
-      {
-        name: "TensorFlow",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
-      },
-    ],
-  },
+const { technicalSkills, softSkills } = Astro.props as Props
+
+const skillCategories = [
+  { name: 'Frontend', skills: technicalSkills.frontend },
+  { name: 'Backend', skills: technicalSkills.backend },
+  { name: 'Database', skills: technicalSkills.database },
+  { name: 'Tools & Others', skills: technicalSkills.toolsAndOthers },
 ]
-
-const softSkills = ["Communication", "Teamwork", "Problem-Solving", "Adaptability", "Time Management"]
 ---
 
 <section id="skills" class="py-20 relative overflow-hidden">
@@ -108,7 +62,7 @@ const softSkills = ["Communication", "Teamwork", "Problem-Solving", "Adaptabilit
               <div class="flex flex-col items-center justify-center group">
                 <div class="relative w-16 h-16 bg-background/80 backdrop-blur-sm rounded-xl p-2 shadow-lg border flex items-center justify-center group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
                   <img
-                    src={skill.icon}
+                    src={skill.image ?? ""}
                     alt={skill.name}
                     class="w-12 h-12 transition-transform duration-300"
                   />
@@ -129,7 +83,7 @@ const softSkills = ["Communication", "Teamwork", "Problem-Solving", "Adaptabilit
       <Card class="bg-background/80 backdrop-blur-sm border-border/50">
         <CardContent class="p-6">
           <div class="flex flex-wrap justify-center gap-4">
-            {softSkills.map((skill) => (
+            {softSkills.items.map((skill) => (
               <div class="bg-primary/10 px-4 py-2 rounded-full border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300">
                 <span class="text-primary font-medium">{skill}</span>
               </div>
