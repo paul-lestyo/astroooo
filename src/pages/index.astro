@@ -12,9 +12,23 @@ import Footer from "@/components/footer.astro"
 import { getPortfolioData } from "@/lib/portfolio"
 
 const portfolio = await getPortfolioData()
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Paulus Lestyo Adhiatma",
+  "jobTitle": "Programmer & Backend Developer",
+  "url": Astro.url.origin,
+  "email": portfolio.contactInfo.email,
+  "sameAs": [
+    portfolio.contactInfo.github,
+    portfolio.contactInfo.linkedin
+  ].filter(Boolean)
+};
 ---
 
 <Layout>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(personSchema)} />
   <Hero contact={portfolio.contactInfo} />
   <About about={portfolio.about} />
   <Skills technicalSkills={portfolio.technicalSkills} softSkills={portfolio.softSkills} />

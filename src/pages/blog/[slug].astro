@@ -5,6 +5,7 @@ import Footer from "@/components/footer.astro"
 import { DocumentRenderer } from '@keystatic/core/renderer'
 import { getBlogPost } from "@/lib/portfolio"
 import { ArrowLeft, Calendar } from "lucide-astro"
+import { Image } from "astro:assets"
 
 const { slug } = Astro.params;
 const data = await getBlogPost(slug!);
@@ -14,6 +15,19 @@ if (!data) {
 }
 
 const { entry } = data;
+
+const blogPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": entry.title,
+  "description": entry.excerpt,
+  "datePublished": entry.publishDate,
+  "image": entry.coverImage ? new URL(entry.coverImage, Astro.url.origin).toString() : undefined,
+  "author": {
+    "@type": "Person",
+    "name": "Paulus Lestyo Adhiatma"
+  }
+};
 
 function formatDate(dateStr: string | null) {
   if (!dateStr) return '';
@@ -26,7 +40,9 @@ function formatDate(dateStr: string | null) {
 <Layout 
   title={`${entry.title} | Blog | Paulus Lestyo Adhiatma`}
   description={entry.excerpt || `Read ${entry.title} on Paulus Lestyo Adhiatma's blog.`}
+  ogImage={entry.coverImage || undefined}
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(blogPostingSchema)} />
   <article class="pt-28 pb-20">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
@@ -39,9 +55,11 @@ function formatDate(dateStr: string | null) {
         <!-- Cover Image -->
         {entry.coverImage && (
           <div class="relative overflow-hidden rounded-xl mb-8 shadow-lg">
-            <img
+            <Image
               src={entry.coverImage}
               alt={entry.title}
+              width={1200}
+              height={600}
               class="w-full h-64 md:h-96 object-cover"
             />
           </div>

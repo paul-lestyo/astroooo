@@ -6,6 +6,7 @@ import CardTitle from "@/components/ui/card-title.astro"
 import CardDescription from "@/components/ui/card-description.astro"
 import Badge from "@/components/ui/badge.astro"
 import { ArrowRight } from "lucide-astro"
+import { Image } from "astro:assets"
 
 interface Project {
   name: string
@@ -48,9 +49,11 @@ const displayProjects = projects.slice(0, 3);
             <CardHeader class="p-0">
               <div class="relative overflow-hidden rounded-t-lg">
                 {project.entry.image ? (
-                  <img
+                  <Image
                     src={project.entry.image}
                     alt={project.entry.name}
+                    width={600}
+                    height={400}
                     class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : (

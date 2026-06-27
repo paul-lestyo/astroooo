@@ -5,6 +5,7 @@ import Footer from "@/components/footer.astro"
 import { DocumentRenderer } from '@keystatic/core/renderer'
 import { getProject } from "@/lib/portfolio"
 import { ArrowLeft, Calendar } from "lucide-astro"
+import { Image } from "astro:assets"
 
 const { slug } = Astro.params;
 const data = await getProject(slug!);
@@ -15,6 +16,18 @@ if (!data) {
 
 const { entry, workExperience } = data;
 
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": entry.name,
+  "description": entry.shortDescription,
+  "image": entry.image ? new URL(entry.image, Astro.url.origin).toString() : undefined,
+  "creator": {
+    "@type": "Person",
+    "name": "Paulus Lestyo Adhiatma"
+  }
+};
+
 function getExperienceCompany(expSlug: string | null) {
   if (!expSlug) return null;
   return workExperience.find(exp => exp.slug === expSlug)?.entry.company || expSlug;
@@ -24,7 +37,9 @@ function getExperienceCompany(expSlug: string | null) {
 <Layout 
   title={`${entry.name} | Projects | Paulus Lestyo Adhiatma`}
   description={entry.shortDescription}
+  ogImage={entry.image || undefined}
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(projectSchema)} />
   <article class="pt-28 pb-20">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
@@ -37,9 +52,11 @@ function getExperienceCompany(expSlug: string | null) {
         <!-- Hero Image -->
         {entry.image && (
           <div class="relative overflow-hidden rounded-xl mb-8 shadow-lg">
-            <img
+            <Image
               src={entry.image}
               alt={entry.name}
+              width={1200}
+              height={600}
               class="w-full h-64 md:h-96 object-cover"
             />
           </div>

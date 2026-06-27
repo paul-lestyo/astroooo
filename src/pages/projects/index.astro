@@ -8,7 +8,7 @@ import CardDescription from "@/components/ui/card-description.astro"
 import Badge from "@/components/ui/badge.astro"
 import Footer from "@/components/footer.astro"
 import { getProjects } from "@/lib/portfolio"
-import { ArrowLeft } from "lucide-astro"
+import { Image } from "astro:assets"
 
 const projects = await getProjects()
 ---
@@ -16,12 +16,6 @@ const projects = await getProjects()
 <Layout title="Projects | Paulus Lestyo Adhiatma" description="Browse all projects by Paulus Lestyo Adhiatma — web applications, backend systems, and more.">
   <section class="pt-28 pb-20">
     <div class="container mx-auto px-4">
-      <div class="mb-8">
-        <a href="/" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
-          <ArrowLeft class="h-4 w-4" />
-          Back to Home
-        </a>
-      </div>
       
       <div class="max-w-3xl mx-auto mb-16 text-center fade-in">
         <h1 class="text-4xl font-bold mb-4">All Projects</h1>
@@ -36,9 +30,11 @@ const projects = await getProjects()
               <CardHeader class="p-0">
                 <div class="relative overflow-hidden rounded-t-lg">
                   {project.entry.image ? (
-                    <img
+                    <Image
                       src={project.entry.image}
                       alt={project.entry.name}
+                      width={600}
+                      height={400}
                       class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (

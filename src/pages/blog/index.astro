@@ -8,7 +8,8 @@ import CardDescription from "@/components/ui/card-description.astro"
 import Badge from "@/components/ui/badge.astro"
 import Footer from "@/components/footer.astro"
 import { getBlogPosts } from "@/lib/portfolio"
-import { ArrowLeft, Calendar } from "lucide-astro"
+import { Calendar } from "lucide-astro"
+import { Image } from "astro:assets"
 
 const posts = await getBlogPosts()
 
@@ -23,12 +24,6 @@ function formatDate(dateStr: string | null) {
 <Layout title="Blog | Paulus Lestyo Adhiatma" description="Blog posts about technology, programming, and personal experiences by Paulus Lestyo Adhiatma.">
   <section class="pt-28 pb-20">
     <div class="container mx-auto px-4">
-      <div class="mb-8">
-        <a href="/" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
-          <ArrowLeft class="h-4 w-4" />
-          Back to Home
-        </a>
-      </div>
 
       <div class="max-w-3xl mx-auto mb-16 text-center fade-in">
         <h1 class="text-4xl font-bold mb-4">Blog</h1>
@@ -43,9 +38,11 @@ function formatDate(dateStr: string | null) {
               <CardHeader class="p-0">
                 <div class="relative overflow-hidden rounded-t-lg">
                   {post.entry.coverImage ? (
-                    <img
+                    <Image
                       src={post.entry.coverImage}
                       alt={post.entry.title}
+                      width={600}
+                      height={400}
                       class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (

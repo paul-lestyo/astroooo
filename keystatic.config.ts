@@ -36,7 +36,6 @@ export default config({
               label: 'Image',
               directory: 'public/images/skills',
               publicPath: '/images/skills/',
-              validation: { accept: 'image/*, .svg' },
             }),
           }),
           { label: 'Frontend', itemLabel: props => props.fields.name.value }
@@ -48,7 +47,6 @@ export default config({
               label: 'Image',
               directory: 'public/images/skills',
               publicPath: '/images/skills/',
-              validation: { accept: 'image/*, .svg' },
             }),
           }),
           { label: 'Backend', itemLabel: props => props.fields.name.value }
@@ -60,7 +58,6 @@ export default config({
               label: 'Image',
               directory: 'public/images/skills',
               publicPath: '/images/skills/',
-              validation: { accept: 'image/*, .svg' },
             }),
           }),
           { label: 'Database', itemLabel: props => props.fields.name.value }
@@ -72,7 +69,6 @@ export default config({
               label: 'Image',
               directory: 'public/images/skills',
               publicPath: '/images/skills/',
-              validation: { accept: 'image/*, .svg' },
             }),
           }),
           { label: 'Tools & Others', itemLabel: props => props.fields.name.value }
