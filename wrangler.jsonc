@@ -1,0 +1,17 @@
+{
+  "name": "personal-web-astro",
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2026-06-27",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "assets": {
+    "directory": "./dist"
+  },
+
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "4b4124ada5fe4b189f6466441efe7109"
+    }
+  ]
+}

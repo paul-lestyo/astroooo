@@ -1,7 +1,7 @@
 import { collection, config, fields, singleton, component } from '@keystatic/core';
 import React from 'react';
 
-
+console.log("NODE_ENV =", process.env.NODE_ENV);
 
 export default config({
   storage: process.env.NODE_ENV === 'production'

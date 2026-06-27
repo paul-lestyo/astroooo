@@ -1,13 +1,15 @@
 import type { APIRoute } from 'astro';
 import { getProjects, getBlogPosts } from '../lib/portfolio';
 
+export const prerender = true;
+
 export const GET: APIRoute = async () => {
   const [projects, posts] = await Promise.all([
     getProjects(),
     getBlogPosts()
   ]);
 
-  const siteUrl = 'https://lestyo.com';
+  const siteUrl = 'https://paulus-lestyo.my.id';
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
