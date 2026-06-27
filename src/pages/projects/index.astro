@@ -1,0 +1,77 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Card from "@/components/ui/card.astro"
+import CardContent from "@/components/ui/card-content.astro"
+import CardHeader from "@/components/ui/card-header.astro"
+import CardTitle from "@/components/ui/card-title.astro"
+import CardDescription from "@/components/ui/card-description.astro"
+import Badge from "@/components/ui/badge.astro"
+import Footer from "@/components/footer.astro"
+import { getProjects } from "@/lib/portfolio"
+import { ArrowLeft } from "lucide-astro"
+
+const projects = await getProjects()
+---
+
+<Layout title="Projects | Paulus Lestyo Adhiatma" description="Browse all projects by Paulus Lestyo Adhiatma — web applications, backend systems, and more.">
+  <section class="pt-28 pb-20">
+    <div class="container mx-auto px-4">
+      <div class="mb-8">
+        <a href="/" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
+          <ArrowLeft class="h-4 w-4" />
+          Back to Home
+        </a>
+      </div>
+      
+      <div class="max-w-3xl mx-auto mb-16 text-center fade-in">
+        <h1 class="text-4xl font-bold mb-4">All Projects</h1>
+        <div class="h-1 w-20 bg-primary mx-auto mb-8"></div>
+        <p class="text-lg text-muted-foreground">A complete showcase of my work and contributions</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {projects.map((project, index) => (
+          <a href={`/projects/${project.slug}`} class="slide-up block group" style={`animation-delay: ${index * 0.05}s;`}>
+            <Card class="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <CardHeader class="p-0">
+                <div class="relative overflow-hidden rounded-t-lg">
+                  {project.entry.image ? (
+                    <img
+                      src={project.entry.image}
+                      alt={project.entry.name}
+                      class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div class="w-full h-48 bg-gradient-to-br from-primary/20 via-muted to-background"></div>
+                  )}
+                </div>
+              </CardHeader>
+              
+              <CardContent class="p-6">
+                <CardTitle class="mb-2 text-foreground group-hover:text-primary transition-colors">{project.entry.name}</CardTitle>
+                <CardDescription class="mb-4 text-sm leading-relaxed">
+                  {project.entry.shortDescription}
+                </CardDescription>
+                
+                <div class="flex flex-wrap gap-2">
+                  {project.entry.techstack.map((tech) => (
+                    <Badge variant="outline" class="text-xs">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))}
+      </div>
+
+      {projects.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-lg text-muted-foreground">No projects yet. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </section>
+  <Footer />
+</Layout>

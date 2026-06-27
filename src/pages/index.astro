@@ -6,6 +6,7 @@ import Skills from "@/components/skills.astro"
 import Experience from "@/components/experience.astro"
 import Education from "@/components/education.astro"
 import Projects from "@/components/projects.astro"
+import BlogPreview from "@/components/blog-preview.astro"
 import Contact from "@/components/contact.astro"
 import Footer from "@/components/footer.astro"
 import { getPortfolioData } from "@/lib/portfolio"
@@ -19,7 +20,8 @@ const portfolio = await getPortfolioData()
   <Skills technicalSkills={portfolio.technicalSkills} softSkills={portfolio.softSkills} />
   <Experience workExperience={portfolio.workExperience} />
   <Education education={portfolio.education} />
-  <Projects projects={portfolio.projects} />
+  <Projects projects={portfolio.projects} workExperience={portfolio.workExperience} />
+  <BlogPreview blogPosts={portfolio.blogPosts} />
   <Contact contactInfo={portfolio.contactInfo} />
   <Footer contactInfo={portfolio.contactInfo} />
 </Layout>

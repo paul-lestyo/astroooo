@@ -4,13 +4,14 @@ import Button from "@/components/ui/button.astro"
 import ModeToggle from "./mode-toggle.astro"
 
 const navItems = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Experience", href: "#experience" },
-  { name: "Education", href: "#education" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/#home" },
+  { name: "About", href: "/#about" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Experience", href: "/#experience" },
+  { name: "Education", href: "/#education" },
+  { name: "Projects", href: "/projects" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/#contact" },
 ]
 ---
 
@@ -19,7 +20,7 @@ const navItems = [
   class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent"
 >
   <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-    <a href="#home" class="text-xl font-bold fade-in">
+    <a href="/" class="text-xl font-bold fade-in">
       Paulus<span class="text-primary">.</span>
     </a>
 
@@ -123,19 +124,30 @@ const navItems = [
       link.addEventListener('click', closeMobileMenu)
     })
 
-    // Smooth scroll for anchor links
-    const allNavLinks = document.querySelectorAll('a[href^="#"]')
+    // Smooth scroll for anchor links on the same page
+    const allNavLinks = document.querySelectorAll('a[href*="#"]')
     allNavLinks.forEach(link => {
       link.addEventListener('click', (e) => {
-        e.preventDefault()
-        const targetId = link.getAttribute('href')?.substring(1)
-        const targetElement = document.getElementById(targetId || '')
+        const href = link.getAttribute('href') || ''
+        const hashIndex = href.indexOf('#')
+        if (hashIndex === -1) return
         
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          })
+        const targetId = href.substring(hashIndex + 1)
+        const pathPart = href.substring(0, hashIndex)
+        
+        // Only scroll if we're on the right page (homepage)
+        const isHomepage = window.location.pathname === '/' || window.location.pathname === ''
+        const isLocalHash = pathPart === '' || pathPart === '/'
+        
+        if (isHomepage && isLocalHash) {
+          e.preventDefault()
+          const targetElement = document.getElementById(targetId)
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            })
+          }
         }
       })
     })

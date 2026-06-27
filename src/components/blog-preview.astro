@@ -1,0 +1,108 @@
+---
+import Card from "@/components/ui/card.astro"
+import CardContent from "@/components/ui/card-content.astro"
+import CardHeader from "@/components/ui/card-header.astro"
+import CardTitle from "@/components/ui/card-title.astro"
+import CardDescription from "@/components/ui/card-description.astro"
+import Badge from "@/components/ui/badge.astro"
+import { ArrowRight, Calendar } from "lucide-astro"
+
+interface BlogPost {
+  title: string
+  publishDate: string | null
+  coverImage: string | null
+  excerpt: string
+  tags: readonly string[]
+}
+
+interface Props {
+  blogPosts: Array<{ slug: string; entry: BlogPost }>
+}
+
+const { blogPosts } = Astro.props as Props
+
+// Show only first 3 posts on homepage
+const displayPosts = blogPosts.slice(0, 3);
+
+function formatDate(dateStr: string | null) {
+  if (!dateStr) return '';
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
+---
+
+<section id="blog" class="py-20 bg-muted/30">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto mb-16 text-center fade-in">
+      <h2 class="text-3xl font-bold mb-4">Latest Blog Posts</h2>
+      <div class="h-1 w-20 bg-primary mx-auto mb-8"></div>
+      <p class="text-lg text-muted-foreground">Thoughts on technology, programming, and personal experiences</p>
+    </div>
+
+    {displayPosts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {displayPosts.map((post, index) => (
+          <a href={`/blog/${post.slug}`} class="slide-up block group" style={`animation-delay: ${index * 0.1}s;`}>
+            <Card class="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <CardHeader class="p-0">
+                <div class="relative overflow-hidden rounded-t-lg">
+                  {post.entry.coverImage ? (
+                    <img
+                      src={post.entry.coverImage}
+                      alt={post.entry.title}
+                      class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div class="w-full h-48 bg-gradient-to-br from-primary/20 via-muted to-background flex items-center justify-center">
+                      <span class="text-4xl opacity-30">📝</span>
+                    </div>
+                  )}
+                </div>
+              </CardHeader>
+              
+              <CardContent class="p-6">
+                {post.entry.publishDate && (
+                  <div class="flex items-center text-xs text-muted-foreground mb-3">
+                    <Calendar class="h-3 w-3 mr-1.5" />
+                    {formatDate(post.entry.publishDate)}
+                  </div>
+                )}
+                <CardTitle class="mb-2 text-foreground group-hover:text-primary transition-colors">{post.entry.title}</CardTitle>
+                <CardDescription class="mb-4 text-sm leading-relaxed line-clamp-3">
+                  {post.entry.excerpt}
+                </CardDescription>
+                
+                {post.entry.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {post.entry.tags.map((tag) => (
+                      <Badge variant="outline" class="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12">
+        <p class="text-muted-foreground">No blog posts yet. Check back soon!</p>
+      </div>
+    )}
+
+    {blogPosts.length > 3 && (
+      <div class="text-center mt-12 fade-in">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 hover:gap-3"
+        >
+          View All Posts
+          <ArrowRight class="h-4 w-4" />
+        </a>
+      </div>
+    )}
+  </div>
+</section>

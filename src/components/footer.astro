@@ -1,15 +1,24 @@
 ---
 import { Github, Linkedin, Mail } from "lucide-astro"
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
 
 interface Props {
-  contactInfo: {
+  contactInfo?: {
     email: string
     linkedin: string | null
     github: string | null
   }
 }
 
-const { contactInfo } = Astro.props as Props
+const { contactInfo: propContactInfo } = Astro.props as Props
+
+// If contactInfo not passed as prop, fetch it directly
+let contactInfo = propContactInfo;
+if (!contactInfo) {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  contactInfo = await reader.singletons.contactInfo.readOrThrow();
+}
 ---
 
 <footer class="border-t py-8">

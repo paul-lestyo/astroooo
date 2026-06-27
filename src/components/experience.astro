@@ -2,7 +2,8 @@
 import Card from "@/components/ui/card.astro"
 import CardContent from "@/components/ui/card-content.astro"
 import Badge from "@/components/ui/badge.astro"
-import { Briefcase, Calendar } from "lucide-astro"
+import { Calendar } from "lucide-astro"
+import { DocumentRenderer } from '@keystatic/core/renderer'
 
 interface Experience {
   company: string
@@ -12,7 +13,8 @@ interface Experience {
   startDate: string | null
   endDate: string | null
   stillWorking: boolean
-  descriptionBullets: readonly string[]
+  descriptionBullets?: readonly string[]
+  content?: any
 }
 
 interface Props {
@@ -76,13 +78,16 @@ function formatRange(experience: Experience) {
                       </div>
                     </div>
                     
-                    <div class="space-y-3">
-                      {experience.entry.descriptionBullets.map((responsibility) => (
-                        <div class="flex items-start gap-3">
-                          <div class="w-2 h-2 rounded-full bg-primary shrink-0 mt-2"></div>
-                          <p class="text-sm text-muted-foreground leading-relaxed">{responsibility}</p>
-                        </div>
-                      ))}
+                    <div class="prose prose-sm dark:prose-invert max-w-none text-muted-foreground">
+                      {experience.entry.content
+                        ? <DocumentRenderer document={experience.entry.content} />
+                        : experience.entry.descriptionBullets?.map((responsibility) => (
+                            <div class="flex items-start gap-3 mb-2">
+                              <div class="w-2 h-2 rounded-full bg-primary shrink-0 mt-2"></div>
+                              <p class="text-sm text-muted-foreground leading-relaxed">{responsibility}</p>
+                            </div>
+                          ))
+                      }
                     </div>
                   </CardContent>
                 </Card>

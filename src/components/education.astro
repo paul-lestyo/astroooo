@@ -1,15 +1,16 @@
 ---
 import Card from "@/components/ui/card.astro"
 import CardContent from "@/components/ui/card-content.astro"
-import Badge from "@/components/ui/badge.astro"
 import { GraduationCap, Calendar } from "lucide-astro"
+import { DocumentRenderer } from '@keystatic/core/renderer'
 
 interface Education {
   campus: string
   degree: string
   startDate: string | null
   endDate: string | null
-  descriptionBullets: readonly string[]
+  descriptionBullets?: readonly string[]
+  content?: any
 }
 
 interface Props {
@@ -60,13 +61,16 @@ function formatRange(item: Education) {
                 </div>
               </div>
               
-              <div class="space-y-3">
-                {educationItem.entry.descriptionBullets.map((bullet) => (
-                  <div class="flex items-start gap-3">
-                    <div class="w-2 h-2 rounded-full bg-primary shrink-0 mt-2"></div>
-                    <p class="text-sm text-muted-foreground leading-relaxed">{bullet}</p>
-                  </div>
-                ))}
+              <div class="prose prose-sm dark:prose-invert max-w-none text-muted-foreground">
+                {educationItem.entry.content
+                  ? <DocumentRenderer document={educationItem.entry.content} />
+                  : educationItem.entry.descriptionBullets?.map((bullet) => (
+                      <div class="flex items-start gap-3 mb-2">
+                        <div class="w-2 h-2 rounded-full bg-primary shrink-0 mt-2"></div>
+                        <p class="text-sm text-muted-foreground leading-relaxed">{bullet}</p>
+                      </div>
+                    ))
+                }
               </div>
             </CardContent>
           </Card>

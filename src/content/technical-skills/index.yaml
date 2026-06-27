@@ -1,46 +1,46 @@
 frontend:
-  - name: "HTML"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-  - name: "CSS"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-  - name: "JavaScript"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-  - name: "TypeScript"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+  - name: HTML
+    image: /images/skills/frontend/0/image.svg
+  - name: CSS
+    image: /images/skills/frontend/1/image.svg
+  - name: JavaScript
+    image: /images/skills/frontend/2/image.svg
+  - name: TypeScript
+    image: /images/skills/frontend/3/image.svg
 backend:
-  - name: "PHP"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
-  - name: "Laravel"
-    image: "https://raw.githubusercontent.com/devicons/devicon/refs/tags/v2.17.0/icons/laravel/laravel-original.svg"
-  - name: "CodeIgniter"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain.svg"
-  - name: "Node.js"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-  - name: "Express.js"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-  - name: "Golang"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg"
+  - name: PHP
+    image: /images/skills/backend/0/image.svg
+  - name: Laravel
+    image: /images/skills/backend/1/image.svg
+  - name: CodeIgniter
+    image: /images/skills/backend/2/image.svg
+  - name: Node.js
+    image: /images/skills/backend/3/image.svg
+  - name: Express.js
+    image: /images/skills/backend/4/image.svg
+  - name: Golang
+    image: /images/skills/backend/5/image.svg
 database:
-  - name: "MySQL"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
-  - name: "PostgreSQL"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-  - name: "MongoDB"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-  - name: "SQL Server"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg"
+  - name: MySQL
+    image: /images/skills/database/0/image.svg
+  - name: PostgreSQL
+    image: /images/skills/database/1/image.svg
+  - name: MongoDB
+    image: /images/skills/database/2/image.svg
+  - name: SQL Server
+    image: /images/skills/database/3/image.svg
 toolsAndOthers:
-  - name: "Git"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
-  - name: "Docker"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-  - name: "VS Code"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
-  - name: "Jira"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg"
-  - name: "TensorFlow"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg"
-  - name: "OutSystems"
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4b/OutSystems_logo.svg"
-  - name: "C#"
-    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg"
+  - name: Git
+    image: /images/skills/toolsAndOthers/0/image.svg
+  - name: Docker
+    image: /images/skills/toolsAndOthers/1/image.svg
+  - name: VS Code
+    image: /images/skills/toolsAndOthers/2/image.svg
+  - name: Jira
+    image: /images/skills/toolsAndOthers/3/image.svg
+  - name: TensorFlow
+    image: /images/skills/toolsAndOthers/4/image.svg
+  - name: OutSystems
+    image: /images/skills/toolsAndOthers/5/image.png
+  - name: C#
+    image: /images/skills/toolsAndOthers/6/image.svg

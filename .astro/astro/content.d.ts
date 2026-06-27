@@ -144,13 +144,16 @@ declare module 'astro:content' {
 	};
 
 	type DataEntryMap = {
-		"about": {
-"index": {
-	id: "index";
+		"about": Record<string, {
+  id: string;
   collection: "about";
-  data: any
-};
-};
+  data: any;
+}>;
+"blog": Record<string, {
+  id: string;
+  collection: "blog";
+  data: any;
+}>;
 "contact-info": {
 "index": {
 	id: "index";
@@ -158,50 +161,16 @@ declare module 'astro:content' {
   data: any
 };
 };
-"education": {
-"sebelas-maret-university/index": {
-	id: "sebelas-maret-university/index";
+"education": Record<string, {
+  id: string;
   collection: "education";
-  data: any
-};
-"sma-negeri-3-surakarta/index": {
-	id: "sma-negeri-3-surakarta/index";
-  collection: "education";
-  data: any
-};
-};
-"projects": {
-"community-service-web-app/index": {
-	id: "community-service-web-app/index";
+  data: any;
+}>;
+"projects": Record<string, {
+  id: string;
   collection: "projects";
-  data: any
-};
-"online-tryout-system-api/index": {
-	id: "online-tryout-system-api/index";
-  collection: "projects";
-  data: any
-};
-"sign-language-prediction-app/index": {
-	id: "sign-language-prediction-app/index";
-  collection: "projects";
-  data: any
-};
-"spi-restful-api/index": {
-	id: "spi-restful-api/index";
-  collection: "projects";
-  data: any
-};
-"university-registration-system/index": {
-	id: "university-registration-system/index";
-  collection: "projects";
-  data: any
-};
-"water-assessment-tool/index": {
-	id: "water-assessment-tool/index";
-  collection: "projects";
-  data: any
-};
-};
+  data: any;
+}>;
 "soft-skills": {
 "index": {
 	id: "index";
@@ -216,38 +185,11 @@ declare module 'astro:content' {
   data: any
 };
 };
-"work-experience": {
-"bangkit-academy/index": {
-	id: "bangkit-academy/index";
+"work-experience": Record<string, {
+  id: string;
   collection: "work-experience";
-  data: any
-};
-"bank-central-asia/index": {
-	id: "bank-central-asia/index";
-  collection: "work-experience";
-  data: any
-};
-"ekasa-teknologi-nusantara/index": {
-	id: "ekasa-teknologi-nusantara/index";
-  collection: "work-experience";
-  data: any
-};
-"ptik-uns/index": {
-	id: "ptik-uns/index";
-  collection: "work-experience";
-  data: any
-};
-"solusi-teknologi-air-nusantara/index": {
-	id: "solusi-teknologi-air-nusantara/index";
-  collection: "work-experience";
-  data: any
-};
-"upt-tik-uns/index": {
-	id: "upt-tik-uns/index";
-  collection: "work-experience";
-  data: any
-};
-};
+  data: any;
+}>;
 
 	};
 

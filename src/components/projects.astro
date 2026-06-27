@@ -5,23 +5,33 @@ import CardHeader from "@/components/ui/card-header.astro"
 import CardTitle from "@/components/ui/card-title.astro"
 import CardDescription from "@/components/ui/card-description.astro"
 import Badge from "@/components/ui/badge.astro"
-import Button from "@/components/ui/button.astro"
-import { Github, ExternalLink } from "lucide-astro"
+import { ArrowRight } from "lucide-astro"
 
 interface Project {
   name: string
   image: string | null
   shortDescription: string
-  text: string
+  content: any
   techstack: readonly string[]
+  experience: string | null
 }
 
 interface Props {
   projects: Array<{ slug: string; entry: Project }>
+  workExperience: Array<{ slug: string; entry: { company: string } }>
 }
 
-const { projects } = Astro.props as Props
+const { projects, workExperience } = Astro.props as Props
+
+function getExperienceCompany(slug: string | null) {
+  if (!slug) return null;
+  return workExperience.find(exp => exp.slug === slug)?.entry.company || slug;
+}
+
+// Show only first 3 projects on homepage
+const displayProjects = projects.slice(0, 3);
 ---
+
 
 <section id="projects" class="py-20">
   <div class="container mx-auto px-4">
@@ -32,8 +42,8 @@ const { projects } = Astro.props as Props
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-      {projects.map((project, index) => (
-        <div class="slide-up" style={`animation-delay: ${index * 0.1}s;`}>
+      {displayProjects.map((project, index) => (
+        <a href={`/projects/${project.slug}`} class="slide-up block group" style={`animation-delay: ${index * 0.1}s;`}>
           <Card class="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
             <CardHeader class="p-0">
               <div class="relative overflow-hidden rounded-t-lg">
@@ -41,7 +51,7 @@ const { projects } = Astro.props as Props
                   <img
                     src={project.entry.image}
                     alt={project.entry.name}
-                    class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                    class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : (
                   <div class="w-full h-48 bg-gradient-to-br from-primary/20 via-muted to-background"></div>
@@ -50,7 +60,7 @@ const { projects } = Astro.props as Props
             </CardHeader>
             
             <CardContent class="p-6">
-              <CardTitle class="mb-2 text-foreground">{project.entry.name}</CardTitle>
+              <CardTitle class="mb-2 text-foreground group-hover:text-primary transition-colors">{project.entry.name}</CardTitle>
               <CardDescription class="mb-4 text-sm leading-relaxed">
                 {project.entry.shortDescription}
               </CardDescription>
@@ -63,11 +73,29 @@ const { projects } = Astro.props as Props
                 ))}
               </div>
 
-              <p class="text-sm text-muted-foreground leading-relaxed">{project.entry.text}</p>
+              {project.entry.experience && (
+                <div class="text-xs text-muted-foreground bg-muted/40 px-3 py-1.5 rounded border border-border/30 inline-block w-full">
+                  💼 Dibuat saat bekerja di: <span class="font-medium text-foreground">{
+                    getExperienceCompany(project.entry.experience)
+                  }</span>
+                </div>
+              )}
             </CardContent>
           </Card>
-        </div>
+        </a>
       ))}
     </div>
+
+    {projects.length > 3 && (
+      <div class="text-center mt-12 fade-in">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 hover:gap-3"
+        >
+          View All Projects
+          <ArrowRight class="h-4 w-4" />
+        </a>
+      </div>
+    )}
   </div>
 </section>

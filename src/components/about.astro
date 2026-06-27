@@ -2,10 +2,11 @@
 import Card from "@/components/ui/card.astro"
 import CardContent from "@/components/ui/card-content.astro"
 import { Phone, Mail, MapPin } from "lucide-astro"
+import { DocumentRenderer } from '@keystatic/core/renderer'
 
 interface Props {
   about: {
-    headline: string
+    content: any
     phone: string
     email: string
     location: string
@@ -24,9 +25,9 @@ const { about } = Astro.props as Props
 
     <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
       <div class="md:col-span-2 slide-up">
-        <p class="text-lg mb-6">
-          {about.headline}
-        </p>
+        <div class="text-lg mb-6 leading-relaxed prose text-muted-foreground">
+          <DocumentRenderer document={about.content} />
+        </div>
       </div>
 
       <div class="slide-up" style="animation-delay: 0.2s;">
